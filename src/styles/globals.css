@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* v2.0 — paleta editorial (ink + rust + bone) */
+    --background: 39 30% 95%;          /* bone */
+    --foreground: 33 22% 16%;          /* ink-500 */
+    --card: 40 40% 98%;
+    --card-foreground: 33 22% 16%;
+    --popover: 40 40% 98%;
+    --popover-foreground: 33 22% 16%;
+    --primary: 33 22% 16%;             /* ink-500 */
+    --primary-foreground: 39 30% 95%;
+    --secondary: 75 74% 66%;           /* lime-400 (mantém acento de marca) */
+    --secondary-foreground: 33 22% 16%;
+    --muted: 39 18% 88%;
+    --muted-foreground: 33 12% 38%;
+    --accent: 19 62% 47%;              /* rust-400 */
+    --accent-foreground: 39 30% 95%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 33 14% 82%;
+    --input: 33 14% 82%;
+    --ring: 19 62% 47%;                /* rust ring */
+    --radius: 0.875rem;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-ink-500 bg-bone antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  /* Tipografia editorial */
+  h1, h2, h3, h4 {
+    @apply font-display tracking-editorial;
+  }
+}
+
+@layer components {
+  /* Botões — herdam tom editorial ink */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium font-sans transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rust-400 focus-visible:ring-offset-2 focus-visible:ring-offset-bone disabled:pointer-events-none disabled:opacity-50 cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply btn bg-ink-500 text-bone hover:bg-ink-600 shadow-sm;
+  }
+
+  .btn-lime {
+    @apply btn bg-lime-400 text-ink-500 hover:bg-lime-300 font-semibold shadow-sm;
+  }
+
+  .btn-rust {
+    @apply btn bg-rust-400 text-bone hover:bg-rust-500 font-semibold shadow-rust;
+  }
+
+  .btn-outline {
+    @apply btn border border-ink-500/15 text-ink-500 hover:bg-ink-500/5;
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-500 hover:bg-ink-500/5;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-editorial border border-ink-500/5;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-ink-500/15 bg-white px-4 py-2.5 text-sm font-sans text-ink-500 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-rust-400 focus:border-transparent transition-all duration-200;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium font-sans;
+  }
+
+  .badge-lime {
+    @apply badge bg-lime-400/30 text-ink-600;
+  }
+
+  .badge-ink {
+    @apply badge bg-ink-500 text-bone;
+  }
+
+  .badge-rust {
+    @apply badge bg-rust-400/15 text-rust-500;
+  }
+
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .container-lokvia {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .ai-glow {
+    box-shadow: 0 0 0 2px #C8E86A, 0 4px 24px rgba(200, 232, 106, 0.25);
+  }
+
+  /* Tipografia editorial v2.0 */
+  .eyebrow {
+    @apply inline-block font-mono text-[11px] uppercase tracking-wider text-ink-400;
+  }
+
+  .display-serif {
+    @apply font-display tracking-editorial;
+  }
+
+  .rule {
+    @apply h-px bg-ink-500/10;
+  }
+
+  /* Noise procedural — agora reutilizável e em ::after para não conflitar com z-index */
+  .noise {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+
+  .noise > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.08'/%3E%3C/svg%3E");
+  }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
